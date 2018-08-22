@@ -47,11 +47,7 @@ class MatchPossibleVue: UIView {
     }
     
     func miseEnPlaceUI() {
-        layer.cornerRadius = 25
-        layer.shadowColor = UIColor.darkGray.cgColor
-        layer.shadowRadius = 5
-        layer.shadowOffset = CGSize(width: 5, height: 5)
-        layer.shadowOpacity = 0.75
+        layerDe(vue: self)
         
         self.backgroundColor = .lightGray
         
