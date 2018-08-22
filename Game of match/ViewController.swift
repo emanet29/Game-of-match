@@ -67,6 +67,29 @@ class ViewController: UIViewController {
         guard bonneVue(touches: touches)  else { return }
         matchPossible.transform = CGAffineTransform.identity
         matchPossible.center.x = self.view.frame.width / 2
+        
+        if matchPossible.attr != .neutre {
+            //si oui check du match + on passe au suivant
+            if matchPossible.attr == .oui && matchAleatoire() {
+                // monteer vue de match
+                print("C'est un match")
+                changerDePerso()
+            } else {
+                changerDePerso()
+            }
+            
+        }
+    }
+    
+    func changerDePerso() {
+        guard matchSuivant != nil else { return }
+        matchPossible.perso = matchSuivant?.perso
+        matchPossible.attr = .neutre
+        matchSuivant?.removeFromSuperview()
+        matchSuivant = nil
+        
+        
+        
     }
     
     func bonneVue(touches: Set<UITouch>) -> Bool {
@@ -75,6 +98,10 @@ class ViewController: UIViewController {
         } else {
             return false
         }
+    }
+    
+    func matchAleatoire() -> Bool {
+        return Int(arc4random_uniform(2)) == 0
     }
     
     func personnaeAleatoire() -> String{
