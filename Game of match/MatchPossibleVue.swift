@@ -9,7 +9,12 @@
 import UIKit
 
 class MatchPossibleVue: UIView {
-
+    
+    var holder: UIView!
+    var persoIV: UIImageView!
+    var persoNom: UILabel!
+    var masque: UIView!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         miseEnPlaceUI()
@@ -21,7 +26,40 @@ class MatchPossibleVue: UIView {
     }
     
     func miseEnPlaceUI() {
+        layer.cornerRadius = 25
+        layer.shadowColor = UIColor.darkGray.cgColor
+        layer.shadowRadius = 5
+        layer.shadowOffset = CGSize(width: 5, height: 5)
+        layer.shadowOpacity = 0.75
+        
         self.backgroundColor = .lightGray
+        
+        holder = UIView(frame: bounds)
+        holder.backgroundColor = .clear
+        holder.clipsToBounds = true
+        holder.layer.cornerRadius = 25
+        addSubview(holder)
+        
+        persoIV = UIImageView(frame: CGRect(x: 0, y: 0, width: holder.frame.width, height: holder.frame.height - 100))
+        persoIV.contentMode = .scaleAspectFill
+        persoIV.clipsToBounds = true
+        persoIV.image = #imageLiteral(resourceName: "Kit")
+        holder.addSubview(persoIV)
+        
+        persoNom = UILabel(frame: CGRect(x: 0, y: holder.frame.height - 100, width: holder.frame.width, height: 100))
+        persoNom.textColor = UIColor.black
+        persoNom.textAlignment = .center
+        persoNom.font = UIFont.boldSystemFont(ofSize: 30)
+        persoNom.adjustsFontSizeToFitWidth = true
+        persoNom.text = "Kit"
+        holder.addSubview(persoNom)
+        
+        masque = UIView(frame: holder.bounds)
+        masque.clipsToBounds = true
+        masque.alpha = 0.25
+        masque.backgroundColor = .clear
+        holder.addSubview(masque)
+        
         
     }
     

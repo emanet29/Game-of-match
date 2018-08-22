@@ -24,37 +24,28 @@ class ViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard bonneVue(touches: touches)  else { return }
-        frameDOrigine = touches.first?.view?.frame
-        
-            
-        
-        
+        frameDOrigine = matchPossible.frame
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard bonneVue(touches: touches)  else { return }
         guard let position = touches.first?.location(in: self.view).x else { return }
-        touches.first?.view?.center.x = position
+        matchPossible.center.x = position
         
         let distanceDuCentre = (self.view.frame.width / 2) - position
         let angleDeRotation = -distanceDuCentre / 360
-        touches.first?.view?.transform = CGAffineTransform(rotationAngle: angleDeRotation)
+        matchPossible.transform = CGAffineTransform(rotationAngle: angleDeRotation)
         
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard bonneVue(touches: touches)  else { return }
-        touches.first?.view?.transform = CGAffineTransform.identity
-        touches.first?.view?.center.x = self.view.frame.width / 2
-        
-        
-        
-        
-        
+        matchPossible.transform = CGAffineTransform.identity
+        matchPossible.center.x = self.view.frame.width / 2
     }
     
     func bonneVue(touches: Set<UITouch>) -> Bool {
-        if let touch = touches.first, let v = touch.view as? MatchPossibleVue {
+        if let touch = touches.first, touch.view == matchPossible.masque {
             return true
         } else {
             return false
