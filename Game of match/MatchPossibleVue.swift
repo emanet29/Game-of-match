@@ -14,6 +14,27 @@ class MatchPossibleVue: UIView {
     var persoIV: UIImageView!
     var persoNom: UILabel!
     var masque: UIView!
+    var perso: String? {
+        didSet {
+            guard perso != nil else { return }
+            persoNom.text = perso!
+            persoIV.image = UIImage(named: perso!)
+        }
+    }
+    
+    var attr: Attirance = Attirance.neutre {
+        didSet {
+            switch attr {
+            case .neutre:
+                masque.backgroundColor = .clear
+            case .oui:
+                masque.backgroundColor = .green
+            case .non:
+                masque.backgroundColor = .red
+                
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,7 +64,6 @@ class MatchPossibleVue: UIView {
         persoIV = UIImageView(frame: CGRect(x: 0, y: 0, width: holder.frame.width, height: holder.frame.height - 100))
         persoIV.contentMode = .scaleAspectFill
         persoIV.clipsToBounds = true
-        persoIV.image = #imageLiteral(resourceName: "Kit")
         holder.addSubview(persoIV)
         
         persoNom = UILabel(frame: CGRect(x: 0, y: holder.frame.height - 100, width: holder.frame.width, height: 100))
@@ -51,7 +71,6 @@ class MatchPossibleVue: UIView {
         persoNom.textAlignment = .center
         persoNom.font = UIFont.boldSystemFont(ofSize: 30)
         persoNom.adjustsFontSizeToFitWidth = true
-        persoNom.text = "Kit"
         holder.addSubview(persoNom)
         
         masque = UIView(frame: holder.bounds)
