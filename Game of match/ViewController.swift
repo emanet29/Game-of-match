@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var frameDOrigine: CGRect?
     var personnages = ["Emilia","Kit","Iwan","Natalie","Sophie","Peter"]
     var matchSuivant: MatchPossibleVue?
+    var matchVue: ItsAMatchVue?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,8 +73,11 @@ class ViewController: UIViewController {
             //si oui check du match + on passe au suivant
             if matchPossible.attr == .oui && matchAleatoire() {
                 // monteer vue de match
-                print("C'est un match")
-                changerDePerso()
+                guard let frame = frameDOrigine else { return }
+                matchVue = ItsAMatchVue(frame: frame)
+                matchVue?.persoMatch = matchPossible.perso
+                view.addSubview(matchVue!)
+                
             } else {
                 changerDePerso()
             }

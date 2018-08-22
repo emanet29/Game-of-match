@@ -16,20 +16,39 @@ class ItsAMatchVue: UIView {
     var lbl : UILabel!
     var bouton: UIButton!
     
+    var persoMatch: String? {
+        didSet {
+            guard persoMatch != nil else { return }
+            setup(perso: persoMatch!)
+            animation()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
     }
     
-    func setup() {
+    func animation() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.moiIV.frame = CGRect(x: self.frame.width / 2 - 150, y: 80, width: 150, height: 150)
+            self.imageArrondie(image: self.moiIV)
+            self.matchIV.frame = CGRect(x: self.frame.width / 2, y: 80, width: 150, height: 150)
+            self.imageArrondie(image: self.matchIV)
+            self.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+        }) { (success) in
+            self.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func setup(perso: String) {
         layerDe(vue: self)
         holder = UIView(frame: bounds)
         holder.alpha = 0.85
+        holder.layer.cornerRadius = 25
         holder.backgroundColor = .black
         holder.clipsToBounds = true
         addSubview(holder)
@@ -41,6 +60,7 @@ class ItsAMatchVue: UIView {
         
         matchIV = UIImageView(frame: CGRect(x: frame.width - 50, y: 50, width: 50, height: 50))
         imageArrondie(image: matchIV)
+        matchIV.image = UIImage(named: perso)
         addSubview(matchIV)
         
         lbl = UILabel(frame: CGRect(x: 0, y: frame.height - 100, width: frame.width, height: 40))
@@ -55,7 +75,7 @@ class ItsAMatchVue: UIView {
         bouton.setTitle("Continuer", for: .normal)
         bouton.tintColor = .white
         bouton.addTarget(self, action: #selector(boutonAppuye), for: .touchUpInside)
-        
+        addSubview(bouton)
         
     }
     
