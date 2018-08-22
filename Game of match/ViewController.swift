@@ -31,6 +31,8 @@ class ViewController: UIViewController {
         matchPossible = MatchPossibleVue(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: view.frame.height - 150))
         matchPossible.perso = personnaeAleatoire()
         view.addSubview(matchPossible)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(changerDePerso), name: Notification.Name("Continuer"), object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -85,7 +87,11 @@ class ViewController: UIViewController {
         }
     }
     
-    func changerDePerso() {
+    @objc func changerDePerso() {
+        if matchVue != nil {
+            matchVue?.removeFromSuperview()
+            matchVue = nil
+        }
         guard matchSuivant != nil else { return }
         matchPossible.perso = matchSuivant?.perso
         matchPossible.attr = .neutre

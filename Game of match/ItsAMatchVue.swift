@@ -91,6 +91,10 @@ class ItsAMatchVue: UIView {
     
     
     @objc func boutonAppuye() {
+        NotificationCenter.default.post(name: Notification.Name("Continuer"), object: nil, userInfo: nil)
+        for v in subviews {
+            v.removeFromSuperview()
+        }
         
     }
     
